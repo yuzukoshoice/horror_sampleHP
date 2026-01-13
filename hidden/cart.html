@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カート | アンTィー久ショッ...プ</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            background-color: #f4f1ea;
+            /* Default start color */
+            color: #333;
+            transition: background 1s, color 1s;
+        }
+
+        .cart-container {
+            max-width: 800px;
+            margin: 5rem auto;
+            text-align: center;
+            min-height: 60vh;
+        }
+
+        h2 {
+            font-family: 'Zen Old Mincho', serif;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #8b0000;
+        }
+
+        /* Empty State */
+        .empty-state {
+            display: none;
+            padding: 4rem;
+            color: #555;
+        }
+
+        /* Filled State (Cursed) */
+        .filled-state {
+            display: none;
+        }
+
+        .cart-item {
+            border-bottom: 1px solid #ccc;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Shippori Mincho', serif;
+        }
+
+        .total {
+            font-size: 1.5rem;
+            margin: 2rem 0;
+            opacity: 0;
+            /* Hidden initially */
+            animation: fadeIn 2s forwards;
+        }
+
+        .total span {
+            font-size: 2rem;
+            color: #8b0000;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        .checkout-btn {
+            background: #333;
+            color: white;
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            border: none;
+            cursor: pointer;
+            font-family: 'Zen Old Mincho', serif;
+            transition: all 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background: #500;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Horror/Glitch Classes */
+        .cursed-mode body {
+            background-color: #111;
+            color: #888;
+        }
+
+        .glitch-text {
+            animation: glitch-anim 0.2s infinite;
+            display: inline-block;
+        }
+
+        @keyframes glitch-anim {
+            0% {
+                transform: translate(0)
+            }
+
+            20% {
+                transform: translate(-2px, 2px)
+            }
+
+            40% {
+                transform: translate(-2px, -2px)
+            }
+
+            60% {
+                transform: translate(2px, 2px)
+            }
+
+            80% {
+                transform: translate(2px, -2px)
+            }
+
+            100% {
+                transform: translate(0)
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay-vignette"></div>
+    <div class="overlay-noise"></div>
+
+    <header class="site-header">
+        <div class="container">
+            <h1 class="logo"><a href="../index.html">アンティークショップ とわいらいと</a></h1>
+        </div>
+    </header>
+
+    <main class="cart-container">
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state">
+            <h2>カートは空です</h2>
+            <p>お客様、何かお忘れではありませんか？</p>
+            <p>それとも、見えるはずのないものが見えているのでしょうか...</p>
+            <br>
+            <a href="../index.html#items" style="color: #8b0000;">商品一覧に戻る</a>
+        </div>
+
+        <!-- Filled State -->
+        <div id="filledState" class="filled-state">
+            <h2 id="cartTitle">買い物かご</h2>
+
+            <div id="cartItemsList">
+                <!-- Items injected here -->
+            </div>
+
+            <div class="total">
+                <p>お支払い合計:</p>
+                <p><span id="totalPrice">¥ ---,---</span></p>
+            </div>
+
+            <button class="checkout-btn" id="checkoutBtn" onclick="checkout()">レジに進む</button>
+        </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cart = getCart(); // from script.js
+
+            const emptyDiv = document.getElementById('emptyState');
+            const filledDiv = document.getElementById('filledState');
+
+            if (cart.length === 0) {
+                // Safe Mode
+                emptyDiv.style.display = 'block';
+            } else {
+                // Check for Diary
+                const hasDiary = cart.some(item => item.title.includes("店主の古い日記"));
+
+                if (hasDiary) {
+                    activateDiaryMode(cart);
+                } else {
+                    // Normal Cursed Mode
+                    activateCursedMode(cart);
+                }
+            }
+        });
+
+        function activateDiaryMode(cart) {
+            const filledDiv = document.getElementById('filledState');
+            filledDiv.style.display = 'block';
+
+            // Extreme Horror Style
+            document.body.style.backgroundColor = 'black';
+            document.body.style.backgroundImage = 'radial-gradient(circle, transparent 20%, #100 80%), repeating-linear-gradient(0deg, transparent, transparent 2px, #200 3px, #000 4px)';
+            document.body.style.backgroundSize = 'cover';
+            document.body.style.color = '#a00';
+            document.body.style.fontFamily = "'Zen Old Mincho', serif";
+
+            // Shake animation
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes violentShake {
+                    0% { transform: translate(0, 0) rotate(0deg); }
+                    10% { transform: translate(-3px, 3px) rotate(-1deg); }
+                    20% { transform: translate(3px, -3px) rotate(1deg); filter: sepia(1) hue-rotate(-50deg) contrast(2); }
+                    30% { transform: translate(-3px, -3px) rotate(-1deg); }
+                    40% { transform: translate(3px, 3px) rotate(1deg); opacity: 0.8; }
+                    100% { transform: translate(0, 0) rotate(0deg); }
+                }
+                body.diary-mode {
+                    animation: violentShake 0.2s infinite;
+                    overflow-x: hidden;
+                }
+                .scary-overlay {
+                    position: fixed;
+                    top: 0; left: 0; width: 100vw; height: 100vh;
+                    background: black;
+                    z-index: 9999;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    pointer-events: none;
+                    opacity: 0;
+                    animation: flash 4s forwards;
+                }
+                @keyframes flash {
+                    0% { opacity: 1; }
+                    5% { opacity: 0; }
+                    10% { opacity: 1; background: red; }
+                    15% { opacity: 0; }
+                    40% { opacity: 0.5; }
+                    100% { opacity: 0; }
+                }
+                .bleeding-text {
+                   text-shadow: 2px 2px 0px #500, -1px -1px 0 #000;
+                }
+            `;
+            document.head.appendChild(style);
+            document.body.classList.add('diary-mode');
+
+            // Render Items with creepy text
+            const list = document.getElementById('cartItemsList');
+            list.innerHTML = '';
+
+            // Create a fake overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'scary-overlay';
+            overlay.innerHTML = '<h1 style="color:white; font-size:5rem; font-family:\'Zen Old Mincho\'">見タナ</h1>';
+            document.body.appendChild(overlay);
+
+            cart.forEach((item) => {
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+                div.style.borderBottom = '1px solid #500';
+
+                let title = item.title;
+                if (title.includes("店主の古い日記")) {
+                    title = "死の記録 (開封済)";
+                }
+
+                div.innerHTML = `
+                    <div class="item-info">
+                        <h3 class="bleeding-text" style="color: red; font-size: 2.5rem;">${title}</h3>
+                        <p class="small-text" style="transform: skewX(20deg);">逃ゲテ 逃ゲテ 逃ゲテ</p>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+
+            // Modify other elements
+            document.getElementById('cartTitle').innerText = "儀式ノ準備";
+            document.getElementById('cartTitle').style.color = 'red';
+            document.querySelector('.site-header').style.display = 'none'; // Hide header
+
+            const btn = document.getElementById('checkoutBtn');
+            btn.innerText = "運命ヲ受ケ入レル";
+            btn.style.background = "#500";
+            btn.style.border = "2px solid red";
+            btn.onmouseover = () => {
+                btn.style.transform = "scale(1.1) rotate(2deg)";
+                btn.innerText = "戻レナイ";
+            };
+
+            // Glitchy Total Price hard coded
+            const priceEl = document.getElementById('totalPrice');
+            priceEl.innerText = "寿命: 残リ僅カ";
+            priceEl.style.color = "red";
+            priceEl.style.fontFamily = "'Zen Old Mincho'";
+            priceEl.style.fontSize = "3rem";
+
+            // Randomly scroll automatically
+            setInterval(() => {
+                window.scrollBy(0, (Math.random() - 0.5) * 50);
+            }, 100);
+        }
+
+        function activateCursedMode(cart) {
+            const filledDiv = document.getElementById('filledState');
+            filledDiv.style.display = 'block';
+
+            // Change background slowly
+            setTimeout(() => {
+                document.body.style.backgroundColor = '#1a1a1a';
+                document.body.style.color = '#ccc';
+                document.querySelector('.site-header').style.backgroundColor = '#222';
+                document.querySelector('.site-header a').style.color = '#fff';
+            }, 500);
+
+            // Render Items
+            const list = document.getElementById('cartItemsList');
+            cart.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = `
+                    <div class="item-info">
+                        <h3>${item.title}</h3>
+                        <p class="small-text">数量: 1</p>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+
+            // Glitchy Total Price
+            const priceEl = document.getElementById('totalPrice');
+            const noisyChars = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝﾞﾟ0123456789!#$%&?+-*/=";
+            const creepyPhrases = ["命", "ミテる", "ザザザ", "ERROR", "NULL", "¥ -666", "不具合", "逃ゲロ", "死"];
+
+            priceEl.style.display = "inline-block";
+
+            setInterval(() => {
+                // 確率でノイズか単語かを決定
+                if (Math.random() < 0.15) {
+                    priceEl.innerText = creepyPhrases[Math.floor(Math.random() * creepyPhrases.length)];
+                } else {
+                    // ランダムノイズ生成
+                    let noise = "";
+                    const len = Math.floor(Math.random() * 8) + 3;
+                    for (let i = 0; i < len; i++) {
+                        noise += noisyChars.charAt(Math.floor(Math.random() * noisyChars.length));
+                    }
+                    priceEl.innerText = noise;
+                }
+
+                // 視覚的なグリッチ効果（傾き・伸縮）
+                const skewX = (Math.random() - 0.5) * 30;
+                const scaleY = 0.8 + Math.random() * 0.5;
+                priceEl.style.transform = `skewX(${skewX}deg) scaleY(${scaleY})`;
+
+                // 色の明滅
+                const redVal = Math.floor(100 + Math.random() * 155);
+                priceEl.style.color = `rgb(${redVal}, 0, 0)`;
+
+                // テキストシャドウで色収差のようなブレを表現
+                const shadowOffX = (Math.random() - 0.5) * 6;
+                const shadowOffY = (Math.random() - 0.5) * 4;
+                priceEl.style.textShadow = `${shadowOffX}px ${shadowOffY}px 0px rgba(0, 0, 0, 0.7), ${-shadowOffX}px ${-shadowOffY}px 0px rgba(255, 0, 0, 0.5)`;
+
+            }, 50); // 50ms間隔で高速更新
+
+            // Horror sounds or text replacements could go here
+            document.getElementById('cartTitle').innerText = "契約内容の確認";
+
+            document.getElementById('checkoutBtn').innerText = "契約を完了する";
+            document.getElementById('checkoutBtn').style.background = "#500";
+        }
+
+        function checkout() {
+            // Level 2 Horror: The End
+            document.body.innerHTML = '';
+            document.body.style.background = 'black';
+            document.body.style.cursor = 'none';
+
+            // Dramatic pause then text
+            setTimeout(() => {
+                const div = document.createElement('div');
+                div.style.color = 'red';
+                div.style.fontSize = '3rem';
+                div.style.fontFamily = 'Zen Old Mincho';
+                div.style.textAlign = 'center';
+                div.style.marginTop = '40vh';
+                div.innerHTML = "<p>頂キマシタ</p>";
+                document.body.appendChild(div);
+            }, 1000);
+
+            setTimeout(() => {
+                document.body.innerHTML += '<p style="color:white;text-align:center;">（ブラウザを閉じてください）</p>';
+                // Clear cart
+                localStorage.removeItem('twilight_cart');
+            }, 4000);
+        }
+    </script>
+</body>
+
+</html>

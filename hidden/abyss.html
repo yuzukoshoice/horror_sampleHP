@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深淵</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #300;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Zen Old Mincho', serif;
+            cursor: none;
+        }
+
+        .message {
+            font-size: 3rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+                color: #f00;
+            }
+
+            100% {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+        }
+
+        .eye {
+            position: absolute;
+            width: 20px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .pupil {
+            width: 5px;
+            height: 5px;
+            background: black;
+            border-radius: 50%;
+            position: absolute;
+            top: 2.5px;
+            left: 7.5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="message">後悔シテモ 遅イ</div>
+
+    <script>
+        // Create eyes that follow cursor
+        document.addEventListener('mousemove', (e) => {
+            const eyes = document.querySelectorAll('.eye');
+            eyes.forEach(eye => {
+                const rect = eye.getBoundingClientRect();
+                const x = (rect.left + rect.width / 2);
+                const y = (rect.top + rect.height / 2);
+                const rad = Math.atan2(e.pageX - x, e.pageY - y);
+                const rot = (rad * (180 / Math.PI) * -1) + 180;
+                eye.style.transform = `rotate(${rot}deg)`;
+            });
+        });
+
+        // Spawn eyes randomly
+        for (let i = 0; i < 100; i++) {
+            const eye = document.createElement('div');
+            eye.className = 'eye';
+            eye.style.left = Math.random() * window.innerWidth + 'px';
+            eye.style.top = Math.random() * window.innerHeight + 'px';
+            eye.style.transform = `scale(${Math.random() + 0.5})`;
+
+            const pupil = document.createElement('div');
+            pupil.className = 'pupil';
+            eye.appendChild(pupil);
+
+            document.body.appendChild(eye);
+        }
+
+        // Close window attempt after 5 seconds (won't work in modern browsers usually, but adds flavor)
+        setTimeout(() => {
+            document.querySelector('.message').innerText = "帰リ道ハ無イ";
+        }, 5000);
+    </script>
+</body>
+
+</html>

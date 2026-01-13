@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アンティークショップ とわいらいと | あなただけの逸品を</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Shippori+Mincho&family=Zen+Old+Mincho:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="overlay-vignette"></div>
+    <div class="overlay-noise"></div>
+
+    <header class="site-header">
+        <div class="container">
+            <h1 class="logo"><a href="index.html">アンティークショップ とわいらいと</a></h1>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="about.html">当店について</a></li>
+                    <li><a href="#items">商品一覧</a></li>
+                    <li><a href="access.html">アクセス</a></li>
+                    <li><a href="hidden/cart.html" class="cart-link" id="cartLink">カート (0)</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h2>その出会いは、<br>運命かもしれない。</h2>
+                <p>時を超えて彷徨うモノたちが、<br>新たな持ち主を待っています。</p>
+                <div class="search-box">
+                    <input type="text" placeholder="何かお探しですか？" id="searchInput">
+                    <button id="searchBtn">探索</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="items" class="products-section">
+            <div class="container">
+                <h3 class="section-title">新着の掘り出し物</h3>
+                <div class="product-grid">
+                    <!-- 商品カード1: 日本人形 -->
+                    <article class="product-card" data-id="1">
+                        <a href="listings/product.html?id=1">
+                            <div class="img-wrapper">
+                                <img src="assets/images/doll.png" alt="日本人形">
+                            </div>
+                            <div class="product-info">
+                                <h4>無垢な日本人形</h4>
+                                <p class="price">¥12,800</p>
+                                <p class="tag">#人形 #状態良好</p>
+                            </div>
+                        </a>
+                    </article>
+
+                    <!-- 商品カード2: 手鏡 -->
+                    <article class="product-card" data-id="2">
+                        <a href="listings/product.html?id=2">
+                            <div class="img-wrapper">
+                                <img src="assets/images/mirror.png" alt="銀の手鏡">
+                            </div>
+                            <div class="product-info">
+                                <h4>曇りのない銀の手鏡</h4>
+                                <p class="price">¥8,500</p>
+                                <p class="tag">#装飾品 #明治期</p>
+                            </div>
+                        </a>
+                    </article>
+
+                    <!-- 商品カード3: 赤い靴 -->
+                    <article class="product-card" data-id="3">
+                        <a href="listings/product.html?id=3">
+                            <div class="img-wrapper">
+                                <img src="assets/images/shoes.png" alt="赤い靴">
+                            </div>
+                            <div class="product-info">
+                                <h4>踊り子の赤い靴</h4>
+                                <p class="price">¥5,000</p>
+                                <p class="tag">#衣類 #訳あり</p>
+                            </div>
+                        </a>
+                    </article>
+
+                    <!-- 商品カード4: 木箱 -->
+                    <article class="product-card" data-id="4">
+                        <a href="listings/product.html?id=4">
+                            <div class="img-wrapper">
+                                <img src="assets/images/box.png" alt="封印された木箱">
+                            </div>
+                            <div class="product-info">
+                                <h4>開かずの木箱</h4>
+                                <p class="price">¥2,000</p>
+                                <p class="tag">#雑貨 #詳細不明</p>
+                            </div>
+                        </a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="banner-area">
+            <a href="hidden/404.html" class="moving-banner">
+                <div class="banner-content">
+                    <p>買い取り強化中... あなたの思い出、高く買います。</p>
+                </div>
+            </a>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 19XX-202X Antique Shop Twilight. All Rights Reserved.</p>
+            <p class="small-text">※当サイトの商品は一部、特殊な事情により返品をお受けできない場合がございます。</p>
+            <div class="puzzle-hint" style="margin-top: 2rem; color: #222; cursor: help; font-size: 0.8rem;">
+                <span onmouseover="this.style.color='#555'" onmouseout="this.style.color='#222'">4つの遺品に隠された言葉を探せ...
+                    「ア・？・？・？」</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

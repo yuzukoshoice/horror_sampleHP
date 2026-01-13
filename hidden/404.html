@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            color: #333;
+            font-family: sans-serif;
+            text-align: center;
+            padding-top: 100px;
+            transition: background-color 5s;
+        }
+
+        h1 {
+            font-size: 5rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2rem;
+        }
+
+        .hidden-message {
+            margin-top: 50px;
+            color: #f0f0f0;
+            /* Hidden */
+            user-select: none;
+        }
+
+        body:hover {
+            background-color: #e0e0e0;
+        }
+
+        body:hover .hidden-message {
+            color: #d0d0d0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>404 Not Found</h1>
+    <p>お探しのページは見つかりませんでした。</p>
+    <p><a href="../index.html">トップページへ戻る</a></p>
+
+    <div class="hidden-message">
+        <p>と見せかけて、あなたは正しい場所に来ました。</p>
+        <p>ここは捨てられたものたちの掃き溜め。</p>
+        <p>出口はありません。</p>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.querySelector('.hidden-message').style.color = '#333';
+            document.querySelector('h1').innerText = "404 Found You";
+            document.querySelector('h1').style.color = "red";
+        }, 10000); // 10秒後に変化
+    </script>
+</body>
+
+</html>

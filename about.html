@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>当店について | アンティークショップ とわいらいと</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Shippori+Mincho&family=Zen+Old+Mincho:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        .about-section {
+            padding: 4rem 0;
+            display: flex;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            filter: sepia(0.8) contrast(1.2);
+            transition: filter 5s;
+        }
+
+        /* Slowly reveal something creepy */
+        .about-image:hover img {
+            filter: sepia(0) contrast(1.5) hue-rotate(90deg);
+        }
+
+        h2 {
+            font-family: 'Zen Old Mincho', serif;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #8b0000;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            line-height: 2;
+        }
+
+        .creepy-note {
+            font-size: 0.8rem;
+            color: #ccc;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay-vignette"></div>
+    <div class="overlay-noise"></div>
+
+    <header class="site-header">
+        <div class="container">
+            <h1 class="logo"><a href="index.html">アンティークショップ とわいらいと</a></h1>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html#items">商品一覧へ戻る</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="about-section">
+            <div class="about-image">
+                <img src="assets/images/owner.png" alt="店主の肖像">
+            </div>
+            <div class="about-text">
+                <h2>店主よりご挨拶</h2>
+                <p>この度は「アンティークショップ とわいらいと」にお越しいただき、誠にありがとうございます。</p>
+                <p>当店では、世界中から集めた「曰く付き」……いえ、希少な価値のある品々を取り扱っております。モノには魂が宿ると申しますが、当店の商品は特にその傾向が強いようです。</p>
+                <p>前の持ち主が手放さざるを得なかった理由、それは彼らにしか分かりませんが、<br>
+                    きっと貴方様なら、彼らの新しい安住の地となっていただけることでしょう。</p>
+                <p>夜明けまでの短い間ですが、どうぞごゆっくり商品をご覧ください。</p>
+                <p class="creepy-note">※店主は現在行方不明のため、自動販売システムにて対応しております。</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 19XX-202X Antique Shop Twilight.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

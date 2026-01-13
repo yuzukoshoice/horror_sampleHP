@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品詳細 | アンティークショップ とわいらいと</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Shippori+Mincho&family=Zen+Old+Mincho:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        .product-detail {
+            padding: 4rem 0;
+            display: flex;
+            gap: 4rem;
+            align-items: flex-start;
+        }
+
+        .product-gallery {
+            flex: 1;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 400px;
+            background: #eee;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumbnails {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .thumb {
+            width: 80px;
+            height: 80px;
+            background: #ddd;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .thumb:hover {
+            opacity: 1;
+        }
+
+        .thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-text {
+            flex: 1;
+        }
+
+        .product-category {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-title {
+            font-family: 'Zen Old Mincho', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            letter-spacing: 0.1em;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            color: #8b0000;
+            margin-bottom: 2rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .product-description P {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            transition: color 2s;
+        }
+
+        .btn-add-cart {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: #333;
+            color: white;
+            text-decoration: none;
+            margin-top: 2rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .btn-add-cart:hover {
+            background: #5e0000;
+        }
+
+        /* Horror Specific */
+        .hidden-text {
+            color: transparent;
+            font-size: 0.1px;
+        }
+
+        .product-description:hover .hidden-text {
+            color: rgba(255, 0, 0, 0.1);
+            font-size: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay-vignette"></div>
+    <div class="overlay-noise"></div>
+
+    <header class="site-header">
+        <div class="container">
+            <h1 class="logo"><a href="../index.html">アンティークショップ とわいらいと</a></h1>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html#items">商品一覧へ戻る</a></li>
+                    <li><a href="../hidden/cart.html" class="cart-link">カート (0)</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="product-detail">
+            <div class="product-gallery">
+                <div class="main-image">
+                    <img id="mainImg" src="../assets/images/doll.png" alt="商品画像">
+                </div>
+                <!-- サムネイルはJSで動的に変わるかも -->
+            </div>
+
+            <div class="product-text">
+                <p class="product-category">人形 / 骨董</p>
+                <h2 class="product-title" id="pTitle">無垢な日本人形</h2>
+                <p class="product-price" id="pPrice">¥12,800</p>
+
+                <div class="product-description" id="pDesc">
+                    <p>明治後期に作られたと思われる、保存状態の非常に良い市松人形です。</p>
+                    <p>前の持ち主の方は大変大切にされていましたが、<br>
+                        「夜中に視線を感じる」「勝手に位置が変わっている」といった<br>
+                        気のせいのような現象を気にされて手放されました。</p>
+                    <p>お顔は非常に愛らしく、見ていると時を忘れてしまいます。<br>
+                        <span class="hidden-text">決して目を合わせてはいけません。魂を持っていかれます。</span>
+                    </p>
+                </div>
+
+                <a href="#" class="btn-add-cart" id="addToCart">カートに入れる</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 19XX-202X Antique Shop Twilight.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Product Database
+        const products = {
+            '1': {
+                category: "人形 / 骨董",
+                title: "無垢な日本人形",
+                price: "¥12,800",
+                desc: `<p>明治後期に作られたと思われる、保存状態の非常に良い市松人形です。</p>
+                    <p>前の持ち主の方は大変大切にされていましたが、<br>
+                    「夜中に視線を感じる」「勝手に位置が変わっている」といった<br>
+                    気のせいのような現象を気にされて手放されました。</p>
+                    <p>お顔は非常に愛らしく、見ていると時を忘れてしまいます。<br>
+                    <span class="hidden-text">決して目を合わせてはいけません。魂を持っていかれます。</span></p>`,
+                images: [
+                    "../assets/images/doll.png",
+                    "../assets/images/doll_detail_1.png", // Face detail
+                    "../assets/images/doll_detail_2.png"  // Kimono detail
+                ]
+            },
+            '2': {
+                category: "装飾品 / 明治期",
+                title: "曇りのない銀の手鏡",
+                price: "¥8,500",
+                desc: `<p>純銀製の美しい手鏡です。曇り一つない鏡面は、見る者の心を映し出すと言われています。</p>
+                    <p>裏面には詳細不明な家紋が刻印されています。<br>
+                    覗き込むと、自分の背後に「知らない誰か」が映り込むことがあるそうですが、<br>
+                    それは疲れている時に見える幻覚でしょう。</p>
+                    <p><span class="hidden-text">鏡の中の世界は、こちらの世界よりも居心地が良いですよ。</span></p>`,
+                images: [
+                    "../assets/images/mirror.png",
+                    "../assets/images/mirror_detail_1.png", // Mirror surface
+                    "../assets/images/mirror_detail_2.png"  // Handle detail
+                ]
+            },
+            '3': {
+                category: "衣類 / 訳あり",
+                title: "踊り子の赤い靴",
+                price: "¥5,000",
+                desc: `<p>かつて有名な踊り子が愛用していたとされる赤い靴です。</p>
+                    <p>舞台での事故以来、履いた者は踊り続けたくなる衝動に駆られると言われていますが、<br>
+                    足のサイズさえ合えば非常に履き心地の良い一品です。</p>
+                    <p>足を入れた瞬間、音楽が聞こえてくるかもしれません。<br>
+                    <span class="hidden-text">もう二度と、止まることは許されません。</span></p>`,
+                images: [
+                    "../assets/images/shoes.png",
+                    "../assets/images/shoes_detail_1.png", // Toe detail
+                    "../assets/images/shoes_detail_2.png"  // Heel detail
+                ]
+            },
+            '4': {
+                category: "雑貨 / 詳細不明",
+                title: "開かずの木箱",
+                price: "¥2,000",
+                desc: `<p>どのような方法を使っても開けることのできない木箱です。</p>
+                    <p>振るとカラカラと乾いた音がします。<br>
+                    中身は宝石か、手紙か、あるいは体の一部か。それは誰にも分かりません。</p>
+                    <p>耳を澄ますと、中から箱を叩く音が聞こえることがあります。<br>
+                    <span class="hidden-text">開けてはいけません。中のモノを出してはいけません。</span></p>`,
+                images: [
+                    "../assets/images/box.png",
+                    "../assets/images/box_detail_1.png", // Lid/Seal
+                    "../assets/images/box_detail_2.png"  // Texture
+                ]
+            },
+            'secret': {
+                category: "非売品 / 重要",
+                title: "店主の古い日記",
+                price: "プライスレス",
+                desc: `<p>ボロボロの革表紙の日記帳です。</p>
+                    <p>『◯月✕日<br>
+                    <br>
+                    今日もまた一人、迷い込んできた。<br>
+                    あの地図を見て来るなんて、物好きなことだ。<br>
+                    彼らは知らない。ここが商品を選ぶ場所ではなく、<br>
+                    <span style="color:red; font-weight:bold;">選ばれる場所</span>だということを。』</p>
+                    <br>
+                    <p>これ以上読んでしまうと、こちらの世界に戻れなくなるかもしれません。</p>
+                    <p><span class="hidden-text" style="color:red; font-size:1rem; opacity:1;">あなたはもう、選ばれています。</span></p>`,
+                images: [] // handled specially
+            }
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id') || '1'; // Default to 1
+
+        const data = products[id];
+
+        if (data) {
+            document.querySelector('.product-category').innerText = data.category;
+            document.getElementById('pTitle').innerText = data.title;
+            document.getElementById('pPrice').innerText = data.price;
+            document.getElementById('pDesc').innerHTML = data.desc;
+
+            // Image Handling
+            if (id === 'secret') {
+                const imgContainer = document.querySelector('.main-image');
+                imgContainer.innerHTML = '<div style="width:100%; height:100%; background:black; display:flex; align-items:center; justify-content:center; color:red; font-size:5rem; font-family:\'Zen Old Mincho\'">秘</div>';
+
+                const btn = document.getElementById('addToCart');
+                btn.innerText = "持ち去る";
+                btn.style.backgroundColor = "#500";
+            } else {
+                // Main Image
+                const mainImg = document.getElementById('mainImg');
+                mainImg.src = data.images[0];
+
+                // Thumbnails
+                const gallery = document.querySelector('.product-gallery');
+
+                // Check if thumbnails container exists, if not create it
+                let thumbContainer = document.querySelector('.thumbnails');
+                if (!thumbContainer) {
+                    thumbContainer = document.createElement('div');
+                    thumbContainer.className = 'thumbnails';
+                    gallery.appendChild(thumbContainer);
+                } else {
+                    thumbContainer.innerHTML = ''; // clear existing
+                }
+
+                data.images.forEach((imgSrc, index) => {
+                    const thumb = document.createElement('div');
+                    thumb.className = 'thumb';
+                    thumb.innerHTML = `<img src="${imgSrc}" alt="画像${index + 1}">`;
+                    thumb.addEventListener('click', () => {
+                        mainImg.src = imgSrc;
+                        // Add active class logic if needed
+                        document.querySelectorAll('.thumb').forEach(t => t.style.opacity = '0.7');
+                        thumb.style.opacity = '1';
+                    });
+                    thumbContainer.appendChild(thumb);
+                });
+            }
+
+        } else {
+            // Invalid ID
+            document.getElementById('pTitle').innerText = "存在しない商品";
+            document.getElementById('pDesc').innerText = "この商品は既に消滅したようです。あなたの記憶違いかもしれません。";
+        }
+
+        // Horror Interaction: Add to Cart button moves
+        const btn = document.getElementById('addToCart');
+
+        // Initial state check
+        const currentCart = JSON.parse(localStorage.getItem('twilight_cart') || '[]');
+        const isAlreadyInCart = currentCart.some(item => item.id === id);
+
+        if (isAlreadyInCart) {
+            btn.innerText = "済";
+            btn.style.pointerEvents = "none";
+            btn.style.background = "#555";
+            btn.style.color = "#888";
+            // Optional: Hide the product or show a message?
+            // User requested: "Mark as 済". 
+        }
+
+        btn.addEventListener('click', (e) => {
+            e.preventDefault(); // Stop default anchor behavior
+
+            // Add to cart logic
+            const item = {
+                id: id,
+                title: data ? data.title : "不明な商品",
+                addedAt: Date.now()
+            };
+
+            // Call the global function (we need to import script.js first, see below)
+            addToCart(item);
+
+            alert("入ッテ シマッタ...");
+            btn.innerText = "済";
+            btn.style.pointerEvents = "none";
+            btn.style.background = "#000";
+        });
+
+        btn.addEventListener('mouseover', () => {
+            if (Math.random() < 0.3) {
+                const x = (Math.random() - 0.5) * 200;
+                const y = (Math.random() - 0.5) * 50;
+                btn.style.transform = `translate(${x}px, ${y}px)`;
+                btn.innerText = "逃ゲテ";
+                btn.style.backgroundColor = "#8b0000";
+            }
+        });
+
+        // --- Puzzle Gimmicks ---
+        setTimeout(() => {
+            const hintDisplay = document.createElement('div');
+            hintDisplay.style.position = 'fixed';
+            hintDisplay.style.top = '50%';
+            hintDisplay.style.left = '50%';
+            hintDisplay.style.transform = 'translate(-50%, -50%)';
+            hintDisplay.style.fontSize = '10rem';
+            hintDisplay.style.color = 'rgba(255, 0, 0, 0.8)';
+            hintDisplay.style.fontFamily = "'Zen Old Mincho', serif";
+            hintDisplay.style.pointerEvents = 'none';
+            hintDisplay.style.opacity = '0';
+            hintDisplay.style.transition = 'opacity 0.5s';
+            hintDisplay.style.zIndex = '1000';
+            document.body.appendChild(hintDisplay);
+
+            function showHint(char) {
+                hintDisplay.innerText = char;
+                hintDisplay.style.opacity = '1';
+                setTimeout(() => {
+                    hintDisplay.style.opacity = '0';
+                }, 2000);
+            }
+
+            if (id === '1') { // 人形 -> ア
+                const img = document.getElementById('mainImg');
+                img.style.cursor = 'pointer';
+                img.addEventListener('click', () => {
+                    // Flash effect
+                    document.body.style.backgroundColor = 'white';
+                    setTimeout(() => document.body.style.backgroundColor = '', 50);
+                    showHint('ア');
+
+                    // Creepy whisper
+                    const p = document.createElement('p');
+                    p.innerText = "...アソボ?";
+                    p.style.position = "absolute";
+                    p.style.color = "red";
+                    p.style.top = img.offsetTop + "px";
+                    p.style.left = img.offsetLeft + "px";
+                    img.parentNode.appendChild(p);
+                });
+            }
+
+            if (id === '2') { // 鏡 -> ケ
+                const title = document.getElementById('pTitle');
+                title.style.cursor = 'help';
+                let clickCount = 0;
+                title.addEventListener('click', () => {
+                    clickCount++;
+                    if (clickCount >= 3) {
+                        showHint('ケ');
+                        title.innerText = "ケ...ケケケ...";
+                        title.style.color = "red";
+                        setTimeout(() => title.innerText = data.title, 3000);
+                        clickCount = 0;
+                    }
+                });
+            }
+
+            if (id === '3') { // 靴 -> ル
+                const price = document.getElementById('pPrice');
+                price.style.cursor = 'pointer';
+                price.addEventListener('click', () => {
+                    showHint('ル');
+                    const originalPrice = price.innerText;
+                    price.innerText = "¥ ル,ルルル";
+                    setTimeout(() => price.innerText = originalPrice, 2000);
+                });
+            }
+
+            if (id === '4') { // 箱 -> ナ
+                const desc = document.getElementById('pDesc');
+                desc.addEventListener('mouseup', () => {
+                    // Selection text
+                    const selection = window.getSelection().toString();
+                    if (selection.length > 0) {
+                        showHint('ナ');
+                        alert("ナカヲ... 見ルナ...");
+                    }
+                });
+            }
+        }, 500);
+    </script>
+    <script src="../script.js"></script>
+</body>
+
+</html>
